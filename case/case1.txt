@@ -1,23 +1,4 @@
-job_id = 1
-job_title = 
-prefered_people = p1
-need_people = 1
-prefered_start = 
-job_length = 10
-required_job_id = 
-
-job_id = 2
-job_title = 
-prefered_people = p2
-need_people = 1
-prefered_start = 
-job_length = 5
-required_job_id = 
-
-job_id = 3
-job_title = 
-prefered_people = p1 p2 p3
-need_people = 2
-prefered_start = 
-job_length = 20
-required_job_id = 1 2 
+# task-id task_title required_resouce optional_resource need_resource start_no_earlier_than due_no_later_than duration required_task_id equivelent_task_id
+1, job1, p1, , 1, , , 10, , 
+2, job2, p2, , 1, , , 5, ,
+3, job3, , p1 p2 p3, 2, , , 20, 1 2,

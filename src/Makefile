@@ -1,3 +1,4 @@
+all: scheduler
 main.o: main.cpp
 	g++ -O2 -c main.cpp
 parser.o: parser.cpp
@@ -5,8 +6,6 @@ parser.o: parser.cpp
 scheduler: main.o parser.o
 	g++ -O2 *.o -o scheduler
 	cp scheduler ../bin
-all: scheduler
-
 clean:
 	rm *.o
 	rm scheduler
