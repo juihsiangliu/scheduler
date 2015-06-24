@@ -1,0 +1,23 @@
+job_id = 1
+job_title = 
+prefered_people = p1
+need_people = 1
+prefered_start = 
+job_length = 10
+required_job_id = 
+
+job_id = 2
+job_title = 
+prefered_people = p2
+need_people = 1
+prefered_start = 
+job_length = 5
+required_job_id = 
+
+job_id = 3
+job_title = 
+prefered_people = p1 p2 p3
+need_people = 2
+prefered_start = 
+job_length = 20
+required_job_id = 1 2 
