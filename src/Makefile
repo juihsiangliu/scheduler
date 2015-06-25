@@ -1,5 +1,5 @@
 all: scheduler
-main.o: main.cpp
+main.o: parser.h main.cpp
 	g++ -O2 -c main.cpp
 parser.o: parser.cpp
 	g++ -O2 -c parser.cpp
@@ -9,3 +9,4 @@ scheduler: main.o parser.o
 clean:
 	rm *.o
 	rm scheduler
+	rm ../bin/scheduler
