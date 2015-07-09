@@ -1,7 +1,8 @@
 #resource_list
 resource available_period
 p1, 0 1000
-p2, 5 1000
+p2, 5 500
+p2, 501 1000
 p3, 0 1000
 #task_list
 task-id task_title required_resouce optional_resource need_resource start_no_earlier_than due_no_later_than duration required_task_id equivelent_task_id
