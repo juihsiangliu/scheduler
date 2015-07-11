@@ -1,11 +1,15 @@
+#include <cstring>
+#include <cstdlib>
+#include <cstdio>
 #include "parser.h"
 #include "task.h"
+#include "resource.h"
 
 const static int bufSize = 4096;
-static bool parseResourcePart(char* buf, bool& bSkip);
+static bool parseResourcePart(char* buf, ResourceMgr* p_pResouceMgr, bool& bSkip);
 static bool parseTaskPart(char* buf, bool& bSkip);
 
-bool parser(const char* filename)
+bool parser(const char* filename, ResourceMgr* p_pResourceMgr)
 {
 	FILE* fp = fopen(filename, "r");
 	if (!fp) {
@@ -38,7 +42,7 @@ bool parser(const char* filename)
         }
 
         if (stage == resource) {
-            parseResourcePart(buf, bSkip);
+            parseResourcePart(buf, p_pResourceMgr, bSkip);
         }
         else if (stage == task) {
             parseTaskPart(buf, bSkip);
@@ -52,25 +56,15 @@ bool parser(const char* filename)
 	return true;
 }
 
-bool parseResourcePart(char* buf, bool& bSkip)
+bool parseResourcePart(char* buf, ResourceMgr* p_pResourceMgr,  bool& bSkip)
 {
     if (bSkip) {
         bSkip = false;
         return true;
     }
 
-    char* pattern = strtok(buf, ",");
-    char resourceName[1024];
-    strcpy(resourceName, pattern);
-	printf("resource %s\n", resourceName);
+    p_pResourceMgr->add(buf);
 
-    int period[2];
-    for (int i = 0; i < 2; i++) {
-        pattern = strtok(NULL, ",");
-        period[i] = atoi(pattern);
-        printf("\t %d", period[i]);
-    }
-    printf("\n");
 
 	return true;
 }

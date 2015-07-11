@@ -2,11 +2,14 @@
 #include <cstdlib>
 
 #include "parser.h"
+#include "resource.h"
 
 
 int main(int argc, const char* argv[])
 {
-	bool b = parser(argv[1]);
+    ResourceMgr resourceMgr;
+
+	bool b = parser(argv[1], &resourceMgr);
 	if (!b) {
 		printf("ERROR: parser %s error\n", argv[1]);
 	}

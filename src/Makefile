@@ -1,5 +1,5 @@
 all: scheduler
-main.o: parser.h main.cpp
+main.o: parser.h main.cpp resource.h
 	g++ -O2 -c main.cpp
 parser.o: parser.cpp parser.h task.h resource.h
 	g++ -O2 -c parser.cpp

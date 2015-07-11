@@ -1,10 +1,8 @@
 #ifndef PARSER_H
 #define PARSER_H
 
-#include <cstdlib>
-#include <cstdio>
-#include <cstring>
+class ResourceMgr;
 
-bool parser(const char* filename);
+bool parser(const char* filename, ResourceMgr* p_pResouceMgr);
 
 #endif
