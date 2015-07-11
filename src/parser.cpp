@@ -1,4 +1,5 @@
 #include "parser.h"
+#include "task.h"
 
 const static int bufSize = 4096;
 static bool parseResourcePart(char* buf, bool& bSkip);
@@ -63,15 +64,13 @@ bool parseResourcePart(char* buf, bool& bSkip)
     strcpy(resourceName, pattern);
 	printf("resource %s\n", resourceName);
 
-    while (1) {
+    int period[2];
+    for (int i = 0; i < 2; i++) {
         pattern = strtok(NULL, ",");
-        if (pattern == NULL) {
-            break;
-        }
-        int begin, end;
-        sscanf(pattern, "%d %d", &begin, &end);
-        printf("\t %d %d\n", begin, end);
+        period[i] = atoi(pattern);
+        printf("\t %d", period[i]);
     }
+    printf("\n");
 
 	return true;
 }
@@ -83,6 +82,23 @@ bool parseTaskPart(char* buf, bool& bSkip)
         return true;
     }
 
-	printf("task: %s\n", buf);
-	return true;
+    char* pattern = strtok(buf, ",");
+    int taskId = atoi(pattern);
+	printf("taskId: %d\n", taskId);
+    
+    const int patternCnt = 9;
+    char* charAry[patternCnt];
+    
+    for (int i = 0; i < patternCnt; i++) {
+        charAry[i] = (char *) malloc(1024 * sizeof(char));
+    }
+
+    for (int i = 0; i < patternCnt; i++) {
+    }
+    
+    for (int i = 0; i < patternCnt; i++) {
+        free(charAry[i]);
+    }
+
+    return true;
 }
