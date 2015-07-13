@@ -9,10 +9,10 @@ int main(int argc, const char* argv[])
 {
     ResourceMgr resourceMgr;
 
-	bool b = parser(argv[1], &resourceMgr);
-	if (!b) {
-		printf("ERROR: parser %s error\n", argv[1]);
-	}
+    bool b = parser(argv[1], &resourceMgr);
+    if (!b) {
+        printf("ERROR: parser %s error\n", argv[1]);
+    }
 
-	return 0;
+    return 0;
 }

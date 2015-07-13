@@ -4,6 +4,7 @@
 #include <vector>
 
 using std::vector;
+using std::pair;
 
 class Resource
 {
@@ -12,11 +13,16 @@ class Resource
         Resource(const Resource& src);
         Resource& operator=(const Resource& rhs);
 
+        const char* getName() const {return m_pResourceName; }
+        void addInterval(const Resource& src);
+
+
     protected:
         void _copyFrom(const Resource& src);
         char m_pResourceName[1024];
-        int m_nStart;
-        int m_nEnd;
+
+        // start, end
+        vector<pair<int, int> > m_availableInterval;
 };
 
 

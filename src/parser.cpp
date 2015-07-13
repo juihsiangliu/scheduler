@@ -11,15 +11,15 @@ static bool parseTaskPart(char* buf, bool& bSkip);
 
 bool parser(const char* filename, ResourceMgr* p_pResourceMgr)
 {
-	FILE* fp = fopen(filename, "r");
-	if (!fp) {
-		printf("ERROR: open file %s error\n", filename);
-		return false;
-	}
+    FILE* fp = fopen(filename, "r");
+    if (!fp) {
+        printf("ERROR: open file %s error\n", filename);
+        return false;
+    }
 
-	char buf[bufSize];
-	enum stage_e {init, resource, task};
-	enum stage_e stage = init;
+    char buf[bufSize];
+    enum stage_e {init, resource, task};
+    enum stage_e stage = init;
     bool bSkip = false;
 
     while(1) {
@@ -52,8 +52,8 @@ bool parser(const char* filename, ResourceMgr* p_pResourceMgr)
         }
     }
 
-	fclose(fp);
-	return true;
+    fclose(fp);
+    return true;
 }
 
 bool parseResourcePart(char* buf, ResourceMgr* p_pResourceMgr,  bool& bSkip)
@@ -66,7 +66,7 @@ bool parseResourcePart(char* buf, ResourceMgr* p_pResourceMgr,  bool& bSkip)
     p_pResourceMgr->add(buf);
 
 
-	return true;
+    return true;
 }
 
 bool parseTaskPart(char* buf, bool& bSkip)
@@ -78,18 +78,18 @@ bool parseTaskPart(char* buf, bool& bSkip)
 
     char* pattern = strtok(buf, ",");
     int taskId = atoi(pattern);
-	printf("taskId: %d\n", taskId);
-    
+    printf("taskId: %d\n", taskId);
+
     const int patternCnt = 9;
     char* charAry[patternCnt];
-    
+
     for (int i = 0; i < patternCnt; i++) {
         charAry[i] = (char *) malloc(1024 * sizeof(char));
     }
 
     for (int i = 0; i < patternCnt; i++) {
     }
-    
+
     for (int i = 0; i < patternCnt; i++) {
         free(charAry[i]);
     }

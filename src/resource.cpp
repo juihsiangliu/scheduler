@@ -1,13 +1,13 @@
 #include <cstring>
 #include <cstdio>
 #include <cstdlib>
+#include <cassert>
 
 #include "resource.h"
 
 
 
 Resource::Resource(const char* p_pBuf)
-: m_nStart(0), m_nEnd(0)
 {
     memset(m_pResourceName, 0, 1024 * sizeof(char));
 
@@ -16,9 +16,10 @@ Resource::Resource(const char* p_pBuf)
 
     char* pattern = strtok(buf, ",");
     strcpy(m_pResourceName, pattern);
-	printf("resource %s\n", m_pResourceName);
+    printf("resource %s\n", m_pResourceName);
 
-    int* period[2] = {&m_nStart, &m_nEnd};
+    pair<int, int> p;
+    int* period[2] = {&p.first, &p.second};
     for (int i = 0; i < 2; i++) {
         pattern = strtok(NULL, ",");
         *period[i] = atoi(pattern);
@@ -41,11 +42,40 @@ Resource& Resource::operator=(const Resource& src)
 }
 
 
+void Resource::addInterval(const Resource& src)
+{
+    if (strcmp(src.getName(), getName()) != 0) {
+        assert(0);
+        return;
+    }
+
+    for (int i = 0; i < src.m_availableInterval.size(); i++) {
+        bool find = false;
+        for (int j = 0; j < m_availableInterval.size(); j++) {
+            if (m_availableInterval[j] == src.m_availableInterval[i]) {
+                find = true;
+                break;
+            }
+        }
+        if (find) {
+            continue;
+        }
+
+        m_availableInterval.push_back(src.m_availableInterval[i]);
+    }
+}
+
+
 void Resource::_copyFrom(const Resource& src)
 {
     strcpy(m_pResourceName, src.m_pResourceName);
-    m_nStart = src.m_nStart;
-    m_nEnd = src.m_nEnd;
+
+    for (int i = 0; i < src.m_availableInterval.size(); i++) {
+        pair<int, int> p;
+        p.first = src.m_availableInterval[i].first;
+        p.second = src.m_availableInterval[i].second;
+        m_availableInterval.push_back(p);
+    }
 }
 
 
@@ -54,5 +84,13 @@ void Resource::_copyFrom(const Resource& src)
 void ResourceMgr::add(const char* buf)
 {
     Resource obj(buf);
+
+    for (int i = 0; i < m_resourceAry.size(); i++) {
+        if (strcmp(m_resourceAry[i].getName(), obj.getName()) == 0) {
+            m_resourceAry[i].addInterval(obj);
+            return;
+        }
+    }
+
     m_resourceAry.push_back(obj);
 }
