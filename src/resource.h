@@ -14,7 +14,7 @@ class Resource
         Resource& operator=(const Resource& rhs);
 
         const char* getName() const {return m_pResourceName; }
-        void addInterval(const Resource& src);
+        void addInterval(const Resource* src);
 
 
     protected:
@@ -29,9 +29,11 @@ class Resource
 class ResourceMgr
 {
     public:
+        ~ResourceMgr();
         void add(const char* buf);
+        Resource* getResouceByName(const char* name) const;
     protected:
-        std::vector<Resource> m_resourceAry;
+        std::vector<Resource*> m_resourceAry;
 };
 
 #endif

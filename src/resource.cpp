@@ -42,17 +42,17 @@ Resource& Resource::operator=(const Resource& src)
 }
 
 
-void Resource::addInterval(const Resource& src)
+void Resource::addInterval(const Resource* src)
 {
-    if (strcmp(src.getName(), getName()) != 0) {
+    if (strcmp(src->getName(), getName()) != 0) {
         assert(0);
         return;
     }
 
-    for (int i = 0; i < src.m_availableInterval.size(); i++) {
+    for (int i = 0; i < src->m_availableInterval.size(); i++) {
         bool find = false;
         for (int j = 0; j < m_availableInterval.size(); j++) {
-            if (m_availableInterval[j] == src.m_availableInterval[i]) {
+            if (m_availableInterval[j] == src->m_availableInterval[i]) {
                 find = true;
                 break;
             }
@@ -61,7 +61,7 @@ void Resource::addInterval(const Resource& src)
             continue;
         }
 
-        m_availableInterval.push_back(src.m_availableInterval[i]);
+        m_availableInterval.push_back(src->m_availableInterval[i]);
     }
 }
 
@@ -83,14 +83,35 @@ void Resource::_copyFrom(const Resource& src)
 
 void ResourceMgr::add(const char* buf)
 {
-    Resource obj(buf);
+    Resource *ptr = new Resource(buf);
 
     for (int i = 0; i < m_resourceAry.size(); i++) {
-        if (strcmp(m_resourceAry[i].getName(), obj.getName()) == 0) {
-            m_resourceAry[i].addInterval(obj);
+        if (strcmp(m_resourceAry[i]->getName(), ptr->getName()) == 0) {
+            m_resourceAry[i]->addInterval(ptr);
             return;
         }
     }
 
-    m_resourceAry.push_back(obj);
+    m_resourceAry.push_back(ptr);
+}
+
+
+Resource* ResourceMgr::getResouceByName(const char* name) const
+{
+    for (int i = 0; i < m_resourceAry.size(); i++) {
+        if (strcmp(name, m_resourceAry[i]->getName()) == 0) {
+            return m_resourceAry[i];
+        }
+    }
+
+    return NULL;
+}
+
+
+ResourceMgr::~ResourceMgr()
+{
+    for (int i = 0; i < m_resourceAry.size(); i++) {
+        Resource* ptr = m_resourceAry[i];
+        delete ptr;
+    }
 }

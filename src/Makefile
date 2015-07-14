@@ -3,7 +3,7 @@ main.o: parser.h main.cpp resource.h
 	g++ -O2 -c main.cpp
 parser.o: parser.cpp parser.h task.h resource.h
 	g++ -O2 -c parser.cpp
-task.o: task.cpp task.h
+task.o: task.cpp task.h resource.h
 	g++ -O2 -c task.cpp
 resource.o: resource.cpp resource.h
 	g++ -O2 -c resource.cpp
