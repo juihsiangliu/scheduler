@@ -1,4 +1,4 @@
-all: scheduler
+all: scheduler test
 main.o: parser.h main.cpp resource.h
 	g++ -O2 -c main.cpp
 parser.o: parser.cpp parser.h task.h resource.h
@@ -10,6 +10,8 @@ resource.o: resource.cpp resource.h
 scheduler: main.o parser.o task.o resource.o
 	g++ -O2 *.o -o scheduler
 	cp scheduler ../bin
+test: scheduler test.cpp
+	g++ -O2 test.cpp -lgtest -lpthread -o test
 clean:
 	rm -f *.o
 	rm -f scheduler
