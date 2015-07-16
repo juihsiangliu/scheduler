@@ -31,7 +31,7 @@ class ResourceMgr
     public:
         ~ResourceMgr();
         void add(const char* buf);
-        Resource* getResouceByName(const char* name) const;
+        Resource* getResourceByName(const char* name) const;
     protected:
         std::vector<Resource*> m_resourceAry;
 };

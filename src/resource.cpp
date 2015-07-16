@@ -49,9 +49,9 @@ void Resource::addInterval(const Resource* src)
         return;
     }
 
-    for (int i = 0; i < src->m_availableInterval.size(); i++) {
+    for (size_t i = 0; i < src->m_availableInterval.size(); i++) {
         bool find = false;
-        for (int j = 0; j < m_availableInterval.size(); j++) {
+        for (size_t j = 0; j < m_availableInterval.size(); j++) {
             if (m_availableInterval[j] == src->m_availableInterval[i]) {
                 find = true;
                 break;
@@ -70,7 +70,7 @@ void Resource::_copyFrom(const Resource& src)
 {
     strcpy(m_pResourceName, src.m_pResourceName);
 
-    for (int i = 0; i < src.m_availableInterval.size(); i++) {
+    for (size_t i = 0; i < src.m_availableInterval.size(); i++) {
         pair<int, int> p;
         p.first = src.m_availableInterval[i].first;
         p.second = src.m_availableInterval[i].second;
@@ -85,7 +85,7 @@ void ResourceMgr::add(const char* buf)
 {
     Resource *ptr = new Resource(buf);
 
-    for (int i = 0; i < m_resourceAry.size(); i++) {
+    for (size_t i = 0; i < m_resourceAry.size(); i++) {
         if (strcmp(m_resourceAry[i]->getName(), ptr->getName()) == 0) {
             m_resourceAry[i]->addInterval(ptr);
             return;
@@ -96,9 +96,9 @@ void ResourceMgr::add(const char* buf)
 }
 
 
-Resource* ResourceMgr::getResouceByName(const char* name) const
+Resource* ResourceMgr::getResourceByName(const char* name) const
 {
-    for (int i = 0; i < m_resourceAry.size(); i++) {
+    for (size_t i = 0; i < m_resourceAry.size(); i++) {
         if (strcmp(name, m_resourceAry[i]->getName()) == 0) {
             return m_resourceAry[i];
         }
@@ -110,7 +110,7 @@ Resource* ResourceMgr::getResouceByName(const char* name) const
 
 ResourceMgr::~ResourceMgr()
 {
-    for (int i = 0; i < m_resourceAry.size(); i++) {
+    for (size_t i = 0; i < m_resourceAry.size(); i++) {
         Resource* ptr = m_resourceAry[i];
         delete ptr;
     }
