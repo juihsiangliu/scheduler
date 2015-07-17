@@ -15,6 +15,7 @@ class Resource
 
         const char* getName() const {return m_pResourceName; }
         void addInterval(const Resource* src);
+        bool isAvailable(int startTime, int endTime) const;
 
 
     protected:

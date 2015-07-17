@@ -16,7 +16,6 @@ Resource::Resource(const char* p_pBuf)
 
     char* pattern = strtok(buf, ",");
     strcpy(m_pResourceName, pattern);
-    printf("resource %s\n", m_pResourceName);
 
     pair<int, int> p;
     int* period[2] = {&p.first, &p.second};
@@ -78,6 +77,19 @@ void Resource::_copyFrom(const Resource& src)
     }
 }
 
+
+bool Resource::isAvailable(int startTime, int endTime) const
+{
+    for (size_t i = 0; i < m_availableInterval.size(); i++) {
+        pair<int, int> p = m_availableInterval[i];
+        printf("first = %d, second = %d\n", p.first, p.second);
+        if (p.first <= startTime && p.second >= endTime) {
+            return true;   
+        }
+    }
+
+    return false;
+}
 
 
 
