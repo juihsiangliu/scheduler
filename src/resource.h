@@ -14,9 +14,9 @@ class Resource
         Resource& operator=(const Resource& rhs);
 
         const char* getName() const {return m_pResourceName; }
-        void addInterval(const Resource* src);
+        void unionIntervalFrom(const Resource* src);
         bool isAvailable(int startTime, int endTime) const;
-
+        void addInterval(int startTime, int endTime);
 
     protected:
         void _copyFrom(const Resource& src);

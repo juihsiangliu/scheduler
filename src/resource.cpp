@@ -39,8 +39,43 @@ Resource& Resource::operator=(const Resource& src)
     return *this;
 }
 
+void Resource::addInterval(int startTime, int endTime)
+{
+    pair<int, int> p(startTime, endTime);
+    for (size_t i = 0; i < m_availableInterval.size(); i++) {
+        if (m_availableInterval[i] == p) {
+            return;
+        }
+    }
+    
+    for (size_t i = 0; i < m_availableInterval.size(); i++) {
+        if (m_availableInterval[i].first <= startTime 
+                && m_availableInterval[i].second <= endTime) {
+            m_availableInterval[i].second = endTime;
+            return;
+        }
+        else if (m_availableInterval[i].first >= startTime 
+                && m_availableInterval[i].second >= endTime) {
+            m_availableInterval[i].first = startTime;
+            return;
+        }
+        else if (m_availableInterval[i].first >= startTime
+                && m_availableInterval[i].second <= endTime) {
+            m_availableInterval[i].first = startTime;
+            m_availableInterval[i].second = endTime;
+            return;
+        }
+        else if (m_availableInterval[i].first <= startTime
+                && m_availableInterval[i].second >= endTime) {
+            return;
+        }
+    }
 
-void Resource::addInterval(const Resource* src)
+    m_availableInterval.push_back(p);
+}
+
+
+void Resource::unionIntervalFrom(const Resource* src)
 {
     if (strcmp(src->getName(), getName()) != 0) {
         assert(0);
@@ -48,18 +83,8 @@ void Resource::addInterval(const Resource* src)
     }
 
     for (size_t i = 0; i < src->m_availableInterval.size(); i++) {
-        bool find = false;
-        for (size_t j = 0; j < m_availableInterval.size(); j++) {
-            if (m_availableInterval[j] == src->m_availableInterval[i]) {
-                find = true;
-                break;
-            }
-        }
-        if (find) {
-            continue;
-        }
-
-        m_availableInterval.push_back(src->m_availableInterval[i]);
+        pair<int, int> p = src->m_availableInterval[i];
+        addInterval(p.first, p.second);
     }
 }
 
@@ -79,10 +104,8 @@ void Resource::_copyFrom(const Resource& src)
 
 bool Resource::isAvailable(int startTime, int endTime) const
 {
-//    printf("size = %u\n", m_availableInterval.size());
     for (size_t i = 0; i < m_availableInterval.size(); i++) {
         pair<int, int> p = m_availableInterval[i];
-        printf("first = %d, second = %d\n", p.first, p.second);
         if (p.first <= startTime && p.second >= endTime) {
             return true;   
         }
@@ -102,7 +125,7 @@ void ResourceMgr::add(const char* buf)
         m_resourceAry.push_back(ptr);
     }
     else {
-        getFromMgr->addInterval(ptr);
+        getFromMgr->unionIntervalFrom(ptr);
     }
 }
 
