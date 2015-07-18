@@ -22,9 +22,8 @@ Resource::Resource(const char* p_pBuf)
     for (int i = 0; i < 2; i++) {
         pattern = strtok(NULL, ",");
         *period[i] = atoi(pattern);
-        printf("\t %d", *period[i]);
     }
-    printf("\n");
+    m_availableInterval.push_back(p);
 }
 
 
@@ -80,6 +79,7 @@ void Resource::_copyFrom(const Resource& src)
 
 bool Resource::isAvailable(int startTime, int endTime) const
 {
+//    printf("size = %u\n", m_availableInterval.size());
     for (size_t i = 0; i < m_availableInterval.size(); i++) {
         pair<int, int> p = m_availableInterval[i];
         printf("first = %d, second = %d\n", p.first, p.second);
@@ -97,14 +97,13 @@ void ResourceMgr::add(const char* buf)
 {
     Resource *ptr = new Resource(buf);
 
-    for (size_t i = 0; i < m_resourceAry.size(); i++) {
-        if (strcmp(m_resourceAry[i]->getName(), ptr->getName()) == 0) {
-            m_resourceAry[i]->addInterval(ptr);
-            return;
-        }
+    Resource *getFromMgr = getResourceByName(ptr->getName());
+    if (getFromMgr == NULL) {
+        m_resourceAry.push_back(ptr);
     }
-
-    m_resourceAry.push_back(ptr);
+    else {
+        getFromMgr->addInterval(ptr);
+    }
 }
 
 

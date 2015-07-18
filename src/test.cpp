@@ -2,6 +2,15 @@
 
 #include "resource.h"
 
+TEST(Resource, isAvailable)
+{
+    Resource r1("p2, 501, 1000");
+
+    ASSERT_TRUE(r1.isAvailable(505, 600));
+    ASSERT_FALSE(r1.isAvailable(505, 1001));
+
+}
+
 
 TEST(ResourceMgr, testName)
 {
