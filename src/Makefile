@@ -10,7 +10,7 @@ task.o: task.cpp task.h resource.h
 	g++ $(CFLAGS) -c task.cpp
 resource.o: resource.cpp resource.h
 	g++ $(CFLAGS) -c resource.cpp
-test.o: test.cpp
+test.o: test.cpp resource.h parser.h
 	g++ $(CFLAGS) -c test.cpp
 scheduler: main.o parser.o task.o resource.o
 	g++ $(CFLAGS) main.o parser.o task.o resource.o -o scheduler

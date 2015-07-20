@@ -67,13 +67,17 @@ TEST(ResourceMgr, testInterval)
 {
     ResourceMgr mgr;
     mgr.add("p2, 5, 500");
-    mgr.add("p2, 501, 1000");
+    mgr.add("p3, 1, 3");
+    mgr.add("p2, 500, 1000");
     
     Resource* p2 = mgr.getResourceByName("p2");
+    Resource* p3 = mgr.getResourceByName("p3");
 
     ASSERT_TRUE(p2->isAvailable(20, 30));
     ASSERT_TRUE(p2->isAvailable(505, 600));
     ASSERT_FALSE(p2->isAvailable(505, 1001));
+    
+    ASSERT_TRUE(p3->isAvailable(1, 3));
 }
 
 

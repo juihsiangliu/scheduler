@@ -13,14 +13,16 @@ class Resource
         Resource(const Resource& src);
         Resource& operator=(const Resource& rhs);
 
-        const char* getName() const {return m_pResourceName; }
+        const char* getName() const { return m_pResourceName; }
         void unionIntervalFrom(const Resource* src);
         bool isAvailable(int startTime, int endTime) const;
         void addInterval(int startTime, int endTime);
+        bool isValid() const { return m_bIsValid; }
 
     protected:
         void _copyFrom(const Resource& src);
         char m_pResourceName[1024];
+        bool m_bIsValid;
 
         // start, end
         vector<pair<int, int> > m_availableInterval;

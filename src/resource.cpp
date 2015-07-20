@@ -8,6 +8,7 @@
 
 
 Resource::Resource(const char* p_pBuf)
+: m_bIsValid(true)
 {
     memset(m_pResourceName, 0, 1024 * sizeof(char));
 
@@ -24,6 +25,12 @@ Resource::Resource(const char* p_pBuf)
         *period[i] = atoi(pattern);
     }
     m_availableInterval.push_back(p);
+
+
+    if (strtok(NULL, ",") != NULL) {
+        m_bIsValid = false;       
+    }
+    
 }
 
 
@@ -99,6 +106,8 @@ void Resource::_copyFrom(const Resource& src)
         p.second = src.m_availableInterval[i].second;
         m_availableInterval.push_back(p);
     }
+
+    m_bIsValid = src.m_bIsValid;
 }
 
 
@@ -119,6 +128,10 @@ bool Resource::isAvailable(int startTime, int endTime) const
 void ResourceMgr::add(const char* buf)
 {
     Resource *ptr = new Resource(buf);
+    if (!ptr->isValid()) {
+        printf("Error: input %s is not valid\n", buf);
+        return;
+    }
 
     Resource *getFromMgr = getResourceByName(ptr->getName());
     if (getFromMgr == NULL) {
