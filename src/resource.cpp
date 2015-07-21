@@ -130,6 +130,7 @@ void ResourceMgr::add(const char* buf)
     Resource *ptr = new Resource(buf);
     if (!ptr->isValid()) {
         printf("Error: input %s is not valid\n", buf);
+        delete ptr;
         return;
     }
 

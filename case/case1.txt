@@ -5,7 +5,7 @@ p2, 5, 500
 p2, 501, 1000
 p3, 0, 1000
 #task_list
-task-id task_title required_resouce optional_resource need_resource start_no_earlier_than due_no_later_than duration required_task_id equivelent_task_id
+task-id task_title required_resource optional_resource need_resource_count start_no_earlier_than due_no_later_than duration required_task_id equivalent_task_id
 1, job1, p1, , 1, , , 10, , 
 2, job2, p2, , 1, , , 5, ,
 3, job3, , p1 p2 p3, 2, , , 20, 1 2,
