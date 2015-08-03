@@ -9,7 +9,7 @@ using std::pair;
 class Resource
 {
     public:
-        Resource(const char* buf);
+        Resource();
         Resource(const Resource& src);
         Resource& operator=(const Resource& rhs);
 
@@ -17,15 +17,14 @@ class Resource
         void unionIntervalFrom(const Resource* src);
         bool isAvailable(int startTime, int endTime) const;
         void addInterval(int startTime, int endTime);
-        bool isValid() const { return m_bIsValid; }
 
+        bool parse(const char* buf);
     protected:
         void _copyFrom(const Resource& src);
-        char m_pResourceName[1024];
-        bool m_bIsValid;
 
         // start, end
         vector<pair<int, int> > m_availableInterval;
+        char m_pResourceName[1024];
 };
 
 

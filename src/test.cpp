@@ -4,7 +4,8 @@
 
 TEST(Resource, isAvailable)
 {
-    Resource r1("p2, 501, 1000");
+    Resource r1;
+    r1.parse("p2, 501, 1000");
 
     ASSERT_TRUE(r1.isAvailable(505, 600));
     ASSERT_FALSE(r1.isAvailable(505, 1001));
@@ -14,7 +15,8 @@ TEST(Resource, isAvailable)
 
 TEST(Resource, addInterval)
 {
-    Resource r1("p2, 501, 1000");
+    Resource r1;
+    r1.parse("p2, 501, 1000");
     r1.addInterval(400, 505);
 
     ASSERT_TRUE(r1.isAvailable(450, 550));
@@ -23,7 +25,8 @@ TEST(Resource, addInterval)
 
 TEST(Resource, addInterval2)
 {
-    Resource r1("p2, 501, 1000");
+    Resource r1;
+    r1.parse("p2, 501, 1000");
     r1.addInterval(600, 2000);
 
     ASSERT_TRUE(r1.isAvailable(550, 1550));
@@ -32,7 +35,8 @@ TEST(Resource, addInterval2)
 
 TEST(Resource, addInterval3)
 {
-    Resource r1("p2, 501, 1000");
+    Resource r1;
+    r1.parse("p2, 501, 1000");
     r1.addInterval(400, 2000);
 
     ASSERT_TRUE(r1.isAvailable(450, 550));
@@ -40,7 +44,8 @@ TEST(Resource, addInterval3)
 
 TEST(Resource, addInterval4)
 {
-    Resource r1("p2, 501, 1000");
+    Resource r1;
+    r1.parse("p2, 501, 1000");
     r1.addInterval(550, 600);
 
     ASSERT_TRUE(r1.isAvailable(550, 800));

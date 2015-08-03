@@ -7,11 +7,14 @@
 
 
 
-Resource::Resource(const char* p_pBuf)
-: m_bIsValid(true)
+Resource::Resource()
 {
     memset(m_pResourceName, 0, 1024 * sizeof(char));
+}
 
+
+bool Resource::parse(const char* p_pBuf)
+{
     char buf[1024];
     strcpy(buf, p_pBuf);
 
@@ -28,9 +31,10 @@ Resource::Resource(const char* p_pBuf)
 
 
     if (strtok(NULL, ",") != NULL) {
-        m_bIsValid = false;       
+        return false; 
     }
     
+    return true;
 }
 
 
@@ -106,8 +110,6 @@ void Resource::_copyFrom(const Resource& src)
         p.second = src.m_availableInterval[i].second;
         m_availableInterval.push_back(p);
     }
-
-    m_bIsValid = src.m_bIsValid;
 }
 
 
@@ -127,8 +129,8 @@ bool Resource::isAvailable(int startTime, int endTime) const
 
 void ResourceMgr::add(const char* buf)
 {
-    Resource *ptr = new Resource(buf);
-    if (!ptr->isValid()) {
+    Resource *ptr = new Resource();
+    if (!ptr->parse(buf)) {
         printf("Error: input %s is not valid\n", buf);
         delete ptr;
         return;
