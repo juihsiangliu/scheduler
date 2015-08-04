@@ -14,6 +14,7 @@ class Task
         Task(ResourceMgr* resourceMgr);
         Task(const Task& src);
         ~Task();
+        Task& operator=(const Task& src);
 
         bool parse(const char* buf);
 
